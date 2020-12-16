@@ -6,14 +6,13 @@ using System.Threading.Tasks;
 
 namespace DotNetCore_Test.Domain
 {
-    public class ProductCategory
+    public class Category
     {
         [Key]
         public string CategoryName { get; set; }
-        [Key]
-        public string ProductName { get; set; }
+        public bool Active { get; set; }
+        public string Description { get; set; }
 
-        public virtual Category Category { get; set; }
-        public virtual Product Product { get; set; }
+        public virtual ICollection<ProductCategory> ProductCategories { get; set; }
     }
 }
