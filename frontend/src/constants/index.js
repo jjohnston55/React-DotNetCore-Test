@@ -1,1 +1,1 @@
-export default API_ENDPOINT = 'http://localhost:50816/api'
+export const API_ENDPOINT = 'http://localhost:50816/api'

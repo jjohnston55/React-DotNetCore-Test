@@ -16,6 +16,8 @@ namespace DotNetCore_Test
 {
     public class Startup
     {
+        readonly string AllowSpecificOrigins = "_allowSpecificOrigins";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -26,6 +28,22 @@ namespace DotNetCore_Test
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: AllowSpecificOrigins,
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin()
+                               .AllowAnyHeader()
+                               .AllowAnyMethod()
+                               .WithOrigins(
+                                            "https://localhost:3000",
+                                            "http://localhost:3000");
+
+                    });
+            });
+
+
             services.AddDbContext<TestContext>(options => options.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Test"));
             services.AddControllers();
         }
@@ -39,6 +57,8 @@ namespace DotNetCore_Test
             }
 
             app.UseRouting();
+
+            app.UseCors(AllowSpecificOrigins);
 
             app.UseAuthorization();
 
