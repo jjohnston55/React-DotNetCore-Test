@@ -31,7 +31,7 @@ namespace DotNetCore_Test.Controllers
         [HttpGet("{categoryName}/{productName}")]
         public async Task<ActionResult<ProductCategory>> GetProductCategory(string categoryName, string productName)
         {
-            var productCategory = await _context.ProductCategories.FindAsync(productName, categoryName);
+            var productCategory = await _context.ProductCategories.FindAsync(categoryName, productName);
 
             if (productCategory == null)
             {
@@ -54,7 +54,7 @@ namespace DotNetCore_Test.Controllers
             }
             catch (DbUpdateException)
             {
-                if (ProductCategoryExists(productCategory.CategoryName))
+                if (ProductCategoryExists(productCategory.CategoryName, productCategory.ProductName))
                 {
                     return Conflict();
                 }
@@ -64,14 +64,14 @@ namespace DotNetCore_Test.Controllers
                 }
             }
 
-            return CreatedAtAction("GetProductCategory", new { id = productCategory.CategoryName }, productCategory);
+            return CreatedAtAction("GetProductCategory", new { categoryName = productCategory.CategoryName, productName = productCategory.ProductName }, productCategory);
         }
 
         // DELETE: api/ProductCategories/Beverage/Water
         [HttpDelete("{categoryName}/{productName}")]
-        public async Task<ActionResult<ProductCategory>> DeleteProductCategory(string id)
+        public async Task<ActionResult<ProductCategory>> DeleteProductCategory(string categoryName, string productName)
         {
-            var productCategory = await _context.ProductCategories.FindAsync(id);
+            var productCategory = await _context.ProductCategories.FindAsync(categoryName, productName);
             if (productCategory == null)
             {
                 return NotFound();
@@ -83,9 +83,9 @@ namespace DotNetCore_Test.Controllers
             return productCategory;
         }
 
-        private bool ProductCategoryExists(string id)
+        private bool ProductCategoryExists(string categoryName, string productName)
         {
-            return _context.ProductCategories.Any(e => e.CategoryName == id);
+            return _context.ProductCategories.Any(e => e.CategoryName == categoryName && e.ProductName == productName);
         }
     }
 }
