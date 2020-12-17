@@ -24,7 +24,13 @@ namespace DotNetCore_Test.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
         {
-            return await _context.Products.ToListAsync();
+            var products = await _context.Products.ToListAsync();
+            //products.ForEach(product =>
+            //{
+            //    product.ProductCategories = _context.ProductCategories.Where(pc => pc.ProductName == product.ProductName).ToList();
+            //});
+
+            return products;
         }
 
         // GET: api/Products/Water
@@ -45,7 +51,7 @@ namespace DotNetCore_Test.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{productName}")]
-        public async Task<IActionResult> PutProduct(string productName, Product product)
+        public async Task<IActionResult> PutProduct(string productName, [FromBody] Product product)
         {
             if (productName != product.ProductName)
             {
@@ -77,7 +83,7 @@ namespace DotNetCore_Test.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Product>> PostProduct(Product product)
+        public async Task<ActionResult<Product>> PostProduct([FromBody] Product product)
         {
             _context.Products.Add(product);
             try

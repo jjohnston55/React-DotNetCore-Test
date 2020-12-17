@@ -30,20 +30,17 @@ ProductAPI.prototype.GetProduct = function(productName) {
 };
 
 ProductAPI.prototype.AddProduct = function(product) {
-    return axios.post(`${API_ENDPOINT}/products/`, {
-        'Product': product
-    }).then(data => {
-        console.log(data);
-        return data;
+    console.log(product);
+    return axios.post(`${API_ENDPOINT}/products/`, product).then(data => {
+        return data.status;
     }).catch(err => {
         console.error(err);
+        return 409;
     });
 }
 
 ProductAPI.prototype.UpdateProduct = function(productName, product) {
-    return axios.put(`${API_ENDPOINT}/products/${productName}`, {
-        'Product': product
-    }).then(data => {
+    return axios.put(`${API_ENDPOINT}/products/${productName}`, product).then(data => {
         console.log(data);
         return data;
     }).catch(err => {
