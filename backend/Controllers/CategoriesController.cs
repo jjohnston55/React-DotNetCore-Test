@@ -24,14 +24,26 @@ namespace DotNetCore_Test.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Category>>> GetCategories()
         {
-            return await _context.Categories.ToListAsync();
+            return await _context.Categories.Select(c => new Category
+            {
+                CategoryName = c.CategoryName,
+                Description = c.Description,
+                Active = c.Active,
+                ProductCategories = _context.ProductCategories.Where(pc => pc.CategoryName == c.CategoryName).ToList()
+            }).ToListAsync();
         }
 
         // GET: api/Categories/Beverages
         [HttpGet("{categoryName}")]
         public async Task<ActionResult<Category>> GetCategory(string categoryName)
         {
-            var category = await _context.Categories.FindAsync(categoryName);
+            var category = await _context.Categories.Select(c => new Category
+            {
+                CategoryName = c.CategoryName,
+                Description = c.Description,
+                Active = c.Active,
+                ProductCategories = _context.ProductCategories.Where(pc => pc.CategoryName == c.CategoryName).ToList()
+            }).Where(c => c.CategoryName == categoryName).FirstAsync();
 
             if (category == null)
             {
@@ -110,6 +122,13 @@ namespace DotNetCore_Test.Controllers
             }
 
             _context.Categories.Remove(category);
+
+            var productCategories = await _context.ProductCategories.Where(pc => pc.CategoryName == categoryName).ToListAsync();
+            if (productCategories.Count > 0)
+            {
+                _context.ProductCategories.RemoveRange(productCategories);
+            }
+
             await _context.SaveChangesAsync();
 
             return category;

@@ -24,11 +24,26 @@ namespace DotNetCore_Test.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
         {
-            var products = await _context.Products.ToListAsync();
-            //products.ForEach(product =>
-            //{
-            //    product.ProductCategories = _context.ProductCategories.Where(pc => pc.ProductName == product.ProductName).ToList();
-            //});
+            return await _context.Products.Select(p => new Product 
+            { 
+                ProductName = p.ProductName, 
+                Active = p.Active, 
+                Cost = p.Cost, 
+                Description = p.Description, 
+                ProductCategories = _context.ProductCategories.Where(pc => pc.ProductName == p.ProductName).ToList()
+            }).ToListAsync();
+        }
+
+        // GET: api/Products/category/Beverage
+        [HttpGet("category/{categoryName}")]
+        public async Task<ActionResult<IEnumerable<Product>>> GetProductByCategory(string categoryName)
+        {
+            var products = await _context.ProductCategories.Where(pc => pc.CategoryName == categoryName).Select(x => x.Product).ToListAsync();
+
+            if (products == null || products.Count == 0)
+            {
+                return NotFound();
+            }
 
             return products;
         }
@@ -37,7 +52,14 @@ namespace DotNetCore_Test.Controllers
         [HttpGet("{productName}")]
         public async Task<ActionResult<Product>> GetProduct(string productName)
         {
-            var product = await _context.Products.FindAsync(productName);
+            var product = await _context.Products.Select(p => new Product
+            {
+                ProductName = p.ProductName,
+                Active = p.Active,
+                Cost = p.Cost,
+                Description = p.Description,
+                ProductCategories = _context.ProductCategories.Where(pc => pc.ProductName == p.ProductName).ToList()
+            }).Where(p => p.ProductName == productName).FirstAsync();
 
             if (product == null)
             {
@@ -116,6 +138,13 @@ namespace DotNetCore_Test.Controllers
             }
 
             _context.Products.Remove(product);
+            
+            var productCategories = await _context.ProductCategories.Where(pc => pc.ProductName == productName).ToListAsync();
+            if (productCategories.Count > 0)
+            {
+                _context.ProductCategories.RemoveRange(productCategories);
+            }
+
             await _context.SaveChangesAsync();
 
             return product;

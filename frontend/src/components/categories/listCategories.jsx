@@ -22,6 +22,14 @@ const ListCategories = (props) => {
                             <span><b>Category Name:</b> {category.categoryName}</span><br/>
                             <span><b>Description:</b> {category.description}</span><br/>
                             <span><b>Is Active:</b> {category.active ? 'Yes' : 'No'}</span><br/>
+                            <span><b>Products: </b> { category.productCategories.map((pc, idx) => {
+                                return (
+                                    <>
+                                        <span key={idx}>{pc.productName}</span>
+                                        <br/>
+                                    </>
+                                )
+                            })}</span>
                         </p>
                 )})
             }
