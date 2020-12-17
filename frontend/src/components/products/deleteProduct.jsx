@@ -39,10 +39,19 @@ const DeleteProduct = (props) => {
             {
                 product &&
                 <>
-                <span><b>Description: </b>{product.description}</span><br/>
-                <span><b>Cost: </b>${product.cost.toFixed(2)}</span><br/>
-                <span><b>Is Active: </b><input type='checkbox' readOnly checked={product.active} /></span><br/>
-                <button onClick={submit}>Delete</button>
+                    <span><b>Description: </b>{product.description}</span><br/>
+                    <span><b>Cost: </b>${product.cost.toFixed(2)}</span><br/>
+                    <span><b>Is Active: </b><input type='checkbox' readOnly checked={product.active} /></span><br/>
+                    <span><b>Categories: </b>{ 
+                        product.productCategories.map((pc, idx) => {
+                        return (
+                            <>
+                                <span key={idx}>{pc.categoryName}</span>
+                                <br/>
+                            </>
+                        )
+                    })}</span><br/>
+                    <button onClick={submit}>Delete</button>
                 </>
             }
         </>

@@ -41,6 +41,14 @@ const DeleteCategory = (props) => {
                 <>
                     <span><b>Description: </b>{category.description}</span><br/>
                     <span><b>Is Active: </b><input type='checkbox' readOnly checked={category.active}/></span><br/>
+                    <span><b>Products: </b> { category.productCategories.map((pc, idx) => {
+                        return (
+                            <>
+                                <span key={idx}>{pc.productName}</span>
+                                <br/>
+                            </>
+                        )
+                    })}</span><br/>
                     <button onClick={submit}>Delete</button>
                 </>
             }

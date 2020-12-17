@@ -36,7 +36,7 @@ namespace DotNetCore_Test.Controllers
 
         // GET: api/Products/category/Beverage
         [HttpGet("category/{categoryName}")]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProductByCategory(string categoryName)
+        public async Task<ActionResult<IEnumerable<Product>>> GetProductsByCategory(string categoryName)
         {
             var products = await _context.ProductCategories.Where(pc => pc.CategoryName == categoryName).Select(x => x.Product).ToListAsync();
 
