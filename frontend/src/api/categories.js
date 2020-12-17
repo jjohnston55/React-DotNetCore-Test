@@ -48,11 +48,11 @@ CategoryAPI.prototype.UpdateCategory = function(categoryName, category) {
 }
 
 CategoryAPI.prototype.DeleteCategory = function(categoryName) {
-    return axios.put(`${API_ENDPOINT}/categories/${categoryName}`).then(data => {
-        console.log(data);
-        return data;
+    return axios.delete(`${API_ENDPOINT}/categories/${categoryName}`).then(data => {
+        return data.status;
     }).catch(err => {
         console.error(err);
+        return 404;
     });
 }
 

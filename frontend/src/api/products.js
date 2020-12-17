@@ -49,11 +49,11 @@ ProductAPI.prototype.UpdateProduct = function(productName, product) {
 }
 
 ProductAPI.prototype.DeleteProduct = function(productName) {
-    return axios.put(`${API_ENDPOINT}/products/${productName}`).then(data => {
-        console.log(data);
-        return data;
+    return axios.delete(`${API_ENDPOINT}/products/${productName}`).then(data => {
+        return data.status;
     }).catch(err => {
         console.error(err);
+        return 404;
     });
 }
 

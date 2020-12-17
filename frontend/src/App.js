@@ -4,11 +4,13 @@ import GetProduct from './components/products/getProduct';
 import ListProducts from './components/products/listProducts';
 import CreateProduct from './components/products/createProduct';
 import UpdateProduct from './components/products/updateProduct';
+import DeleteProduct from './components/products/deleteProduct';
 
 import GetCategory from './components/categories/getCategory';
 import ListCategories from './components/categories/listCategories';
 import CreateCategory from './components/categories/createCategory';
 import UpdateCategory from './components/categories/updateCategory';
+import DeleteCategory from './components/categories/deleteCategory';
 
 import 'antd/dist/antd.css';
 import './App.css';
@@ -31,7 +33,9 @@ const App = () => {
 						<Collapse.Panel header="Update Product" key="4">
 							<UpdateProduct />
 						</Collapse.Panel>
-						<Collapse.Panel header="Delete Product" key="5"></Collapse.Panel>
+						<Collapse.Panel header="Delete Product" key="5">
+							<DeleteProduct />
+						</Collapse.Panel>
 					</Collapse>
 				</Col>
 				<Col span={10}>
@@ -48,7 +52,9 @@ const App = () => {
 						<Collapse.Panel header="Update Category" key="4">
 							<UpdateCategory />
 						</Collapse.Panel>
-						<Collapse.Panel header="Delete Category" key="5"></Collapse.Panel>
+						<Collapse.Panel header="Delete Category" key="5">
+							<DeleteCategory />
+						</Collapse.Panel>
 					</Collapse>
 				</Col>
 			</Row>

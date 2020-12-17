@@ -49,7 +49,7 @@ const UpdateProduct = (props) => {
             <span><b>Search Product Name: </b><input onChange={(evt) => setProductName(evt.target.value)} /></span><br/>
             <hr />
             <span><b>Description: </b><input value={description} onChange={(evt) => setDescription(evt.target.value)} /></span><br/>
-            <span><b>Cost: </b><input value={cost} onChange={(evt) => setCost(evt.target.value)} /></span><br/>
+            <span><b>Cost: </b>$<input value={cost} onChange={(evt) => setCost(evt.target.value)} /></span><br/>
             <span><b>Is Active: </b><input type='checkbox' checked={active} onChange={(evt) => setActive(evt.target.checked)} /></span><br/>
             <button onClick={submit}>Update</button>
         </>
