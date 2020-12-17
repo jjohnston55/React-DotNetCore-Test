@@ -41,10 +41,10 @@ ProductAPI.prototype.AddProduct = function(product) {
 
 ProductAPI.prototype.UpdateProduct = function(productName, product) {
     return axios.put(`${API_ENDPOINT}/products/${productName}`, product).then(data => {
-        console.log(data);
-        return data;
+        return data.status;
     }).catch(err => {
         console.error(err);
+        return 404;
     });
 }
 

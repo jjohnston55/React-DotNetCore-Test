@@ -10,7 +10,7 @@ const CreateCategory = (props) => {
     const categoryAPI = new CategoryAPI();
 
     const submit = () => {
-        if (categoryName != '' && description != '') {
+        if (categoryName !== '' && description !== '') {
             const category = {
                 'CategoryName': categoryName,
                 'Description': description,

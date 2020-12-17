@@ -11,7 +11,7 @@ const CreateProduct = (props) => {
     const productAPI = new ProductAPI();
 
     const submit = () => {
-        if (!isNaN(parseFloat(cost)) && productName != '' && description != '') {
+        if (!isNaN(parseFloat(cost)) && productName !== '' && description !== '') {
             const product = {
                 'ProductName': productName,
                 'Description': description,

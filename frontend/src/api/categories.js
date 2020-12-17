@@ -40,10 +40,10 @@ CategoryAPI.prototype.AddCategory = function(category) {
 
 CategoryAPI.prototype.UpdateCategory = function(categoryName, category) {
     return axios.put(`${API_ENDPOINT}/categories/${categoryName}`, category).then(data => {
-        console.log(data);
-        return data;
+        return data.status;
     }).catch(err => {
         console.error(err);
+        return 404;
     });
 }
 
