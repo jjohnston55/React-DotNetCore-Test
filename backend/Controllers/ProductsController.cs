@@ -107,7 +107,9 @@ namespace DotNetCore_Test.Controllers
         [HttpPost]
         public async Task<ActionResult<Product>> PostProduct([FromBody] Product product)
         {
+            var productCategories = product.ProductCategories;
             _context.Products.Add(product);
+            _context.ProductCategories.AddRange(productCategories);
             try
             {
                 await _context.SaveChangesAsync();
