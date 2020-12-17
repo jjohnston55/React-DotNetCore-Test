@@ -18,6 +18,17 @@ ProductAPI.prototype.GetProducts = function() {
     });
 };
 
+ProductAPI.prototype.GetProductsByCategory = function(categoryName) {
+    return axios.get(`${API_ENDPOINT}/products/category/${categoryName}`).then(response => {
+        return response.data;
+    }).then(data => {
+        console.log(data);
+        return data;
+    }).catch(err => {
+        console.error(err);
+    });
+}
+
 ProductAPI.prototype.GetProduct = function(productName) {
     return axios.get(`${API_ENDPOINT}/products/${productName}`).then(response => {
         return response.data;

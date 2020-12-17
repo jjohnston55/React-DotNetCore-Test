@@ -1,6 +1,7 @@
 import { Col, Collapse, Row } from 'antd';
 
 import GetProduct from './components/products/getProduct';
+import GetProductsByCategory from './components/products/getProductsByCategory';
 import ListProducts from './components/products/listProducts';
 import CreateProduct from './components/products/createProduct';
 import UpdateProduct from './components/products/updateProduct';
@@ -24,16 +25,19 @@ const App = () => {
 						<Collapse.Panel header="List Products" key="1">
 							<ListProducts />
 						</Collapse.Panel>
-						<Collapse.Panel header="Get Product" key="2">
+						<Collapse.Panel header="Get Products by Category" key="2">
+							<GetProductsByCategory />
+						</Collapse.Panel>
+						<Collapse.Panel header="Get Product" key="3">
 							<GetProduct />
 						</Collapse.Panel>
-						<Collapse.Panel header="Create Product" key="3">
+						<Collapse.Panel header="Create Product" key="4">
 							<CreateProduct />
 						</Collapse.Panel>
-						<Collapse.Panel header="Update Product" key="4">
+						<Collapse.Panel header="Update Product" key="5">
 							<UpdateProduct />
 						</Collapse.Panel>
-						<Collapse.Panel header="Delete Product" key="5">
+						<Collapse.Panel header="Delete Product" key="6">
 							<DeleteProduct />
 						</Collapse.Panel>
 					</Collapse>
