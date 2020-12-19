@@ -80,6 +80,23 @@ namespace DotNetCore_Test.Controllers
                 return BadRequest();
             }
 
+            var existingProductCategories = _context.ProductCategories.Where(pc => pc.ProductName == productName).ToList();
+            foreach(var pc in product.ProductCategories)
+            {
+                if (!existingProductCategories.Any(e => e.CategoryName == pc.CategoryName))
+                {
+                    _context.ProductCategories.Add(pc);
+                }
+            }
+
+            foreach(var existingPC in existingProductCategories)
+            {
+                if (!product.ProductCategories.Any(pc => pc.CategoryName == existingPC.CategoryName))
+                {
+                    _context.ProductCategories.Remove(existingPC);
+                }
+            }
+
             _context.Entry(product).State = EntityState.Modified;
 
             try
@@ -126,7 +143,7 @@ namespace DotNetCore_Test.Controllers
                 }
             }
 
-            return CreatedAtAction("GetProduct", new { productName = product.ProductName }, product);
+            return NoContent();
         }
 
         // DELETE: api/Products/Water
